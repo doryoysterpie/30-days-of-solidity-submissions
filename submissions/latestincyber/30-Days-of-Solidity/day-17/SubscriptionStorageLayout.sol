@@ -9,6 +9,7 @@ pragma solidity ^0.8.0;
 // - subscriptions mapping: Maps user addresses to their subscription details.
 // - planPrices mapping: Maps plan IDs to their respective prices.
 // - planDurations mapping: Maps plan IDs to their respective durations in seconds.
+
 contract SubscriptionStorageLayout {
     address public logicContract;
     address public owner;

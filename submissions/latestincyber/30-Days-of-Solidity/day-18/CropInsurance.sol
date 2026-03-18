@@ -23,7 +23,7 @@ contract CropInsurance {
     uint256 public constant PREMIUM = 0.1 ether;
 
     mapping(address => bool) public policies;
-
+    
     constructor(address _oracleAddress) {
         weatherOracle = IWeatherOracle(_oracleAddress);
     }
