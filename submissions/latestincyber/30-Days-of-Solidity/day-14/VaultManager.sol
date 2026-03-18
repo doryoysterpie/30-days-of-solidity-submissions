@@ -5,7 +5,7 @@ import "./IDepositBox.sol";
 import "./VaultBoxes.sol";
 
 contract VaultManager {
-    mapping(address => IDepositBox[]) public userBoxes;
+    mapping(address => IDepositBox[]) public userVaults;
     event VaultCreated(address indexed user, address vault, string vaultType);
 
     function createBasicVault() external returns (addess) {
