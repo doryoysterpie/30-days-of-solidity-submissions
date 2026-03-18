@@ -25,6 +25,7 @@ contract TimeLockedDepositBox is BaseDepositBox {
     uint256 public unlockTime;
 
     constructor(uint256 _lockDuration) {
+        require(_lockDuration > 0, "Lock duration must be > 0");
         unlockTime = block.timestamp + _lockDuration;
     }
 
