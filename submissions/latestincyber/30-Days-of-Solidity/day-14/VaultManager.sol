@@ -18,6 +18,7 @@ contract VaultManager {
 
     function createPremiumVault() external returns (address) {
         PremiumDepositBox vault = new PremiumDepositBox();
+        vault.transferOwnership(msg.sender);
         userVaults[msg.sender].push(IDepositBox(address(vault)));
         emit VaultCreated(msg.sender, address(vault), "Premium");
         return address(vault);
