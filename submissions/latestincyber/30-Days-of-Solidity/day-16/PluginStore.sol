@@ -42,7 +42,8 @@ contract PluginStore {
         string memory argument
     ) external {
         address plugin = plugins[key];
-        require(plugin != address(0), "Plugin not found");
+                require(plugin != address(0), "Plugin not found");
+                require(msg.sender == user, "Can only run plugin for self");
 
         // this is where (in a real system) we might want to verify who is calling/restrict calls
 
