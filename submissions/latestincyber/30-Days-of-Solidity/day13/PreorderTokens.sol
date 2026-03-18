@@ -44,7 +44,7 @@ contract SimplifiedTokenSale is SimpleERC20 {
     // We override the transfer function of the parent ERC20
     function transfer(address _to, uint256 _value) public override returns (bool) {
         // ONLY allow transfers IF the sale is finalized OR if the contract itself is sending (for buying)
-        require(fainlized || msg.sender == address(this), "Tokens locked");
+        require(finalized || msg.sender == address(this), "Tokens locked");
         return super.transfer(_to, _value);
     }
 
