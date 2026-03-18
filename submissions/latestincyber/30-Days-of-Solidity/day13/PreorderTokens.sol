@@ -124,9 +124,12 @@ contract SimplifiedTokenSale is SimpleERC20 {
         _transfer(address(this), msg.sender, releasable);
     }
 
+    mapping(address => uint256) public contributions;
+
     // this is the SAFE way of adding REFUND functionality
     function refund() public {
         uint256 amount = contributions[msg.sender];
+        require(amount > 0, "No contribution to refund");
         contributions[msg.sender] = 0; // Prevent re-entrancy
         payable(msg.sender).transfer(amount); // External call AFTER
     }
