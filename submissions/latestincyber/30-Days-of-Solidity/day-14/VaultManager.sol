@@ -39,7 +39,7 @@ contract VaultManager {
     function getVaultInfo(address vaultAddress) external view returns (
         string memory vaultType,
         address owner,
-        uint256 depositTime,
+        uint256 depositTime
     ) {
         IDepositBox vault = IDepositBox(vaultAddress);
         return (
