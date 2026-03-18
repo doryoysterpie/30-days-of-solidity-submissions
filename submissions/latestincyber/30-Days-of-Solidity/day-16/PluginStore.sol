@@ -30,7 +30,9 @@ contract PluginStore {
     }
 
     function registerPlugin(string memory key, address pluginAddress) external onlyOwner {
-        plugins[key] = pluginAddress;
+        require(pluginAddress != address(0), "Invalid plugin address");
+                require(pluginAddress.code.length > 0, "Plugin must be a contract");
+                plugins[key] = pluginAddress;
     }
 
     function runPlugin(
