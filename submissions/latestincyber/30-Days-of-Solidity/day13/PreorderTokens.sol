@@ -114,9 +114,10 @@ contract SimplifiedTokenSale is SimpleERC20 {
 
     function releaseVested() public {
         VestingSchedule storage schedule = vesting[msg.sender];
-            uint256 elapsed = block.timestamp - schedule.startTime;
-            uint256 vested = (schedule.totalAmount * elapsed) / schedule.duration;
-            uint256 releasable = vested - schedule.released;
+        require(schedule.duration > 0, "Vesting not set");
+        uint256 elapsed = block.timestamp - schedule.startTime;
+        uint256 vested = (schedule.totalAmount * elapsed) / schedule.duration;
+        uint256 releasable = vested - schedule.released;
     
         require(releasable > 0, "Nothing to release");
         schedule.released += releasable;
