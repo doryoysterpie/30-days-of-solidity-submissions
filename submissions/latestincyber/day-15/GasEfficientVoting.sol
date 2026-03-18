@@ -33,10 +33,13 @@ contract GasEfficientVoting {
     function vote(uint8 proposalId) external {
         require(proposalId <= proposalCount && proposalId > 0, "Invalid ID");
 
+        Proposal storage proposal = proposals[proposalId];
+        require(block.timestamp >= proposal.startTime && block.timestamp <= proposal.endTime, "Voting closed");
+
         uint256 mask = 1 << proposalId; // Create a mask for the proposal ID
         require(voterRegistery[msg.sender] & mask == 0, "Already voted"); // Check if user has already voted
         voterRegistery[msg.sender] |= mask; // Mark the user as having voted 
-        proposals[proposalId].voteCount++; // Increment vote count
+        proposal.voteCount++; // Increment vote count
     }
 
     function hasVoted(address voter, uint8 proposalId) external view returns (bool) {
