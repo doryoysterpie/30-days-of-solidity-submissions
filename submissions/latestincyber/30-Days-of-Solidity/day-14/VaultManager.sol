@@ -10,6 +10,7 @@ contract VaultManager {
 
     function createBasicVault() external returns (addess) {
         BasicDepositBox vault = new BasicDepositBox();
+        vault.transferOwnership(msg.sender);
         userVaults[msg.sender].push(IDepositBox(address(vault)));
         emit VaultCreated(msg.sender, address(vault), "Basic");
         return address(vault);
