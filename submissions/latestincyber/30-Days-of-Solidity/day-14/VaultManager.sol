@@ -26,6 +26,7 @@ contract VaultManager {
 
     function createTimeLockedVault(uint256 lockDuration) external returns (address) {
         TimeLockedDepositBox vault = new TimeLockedDepositBox(lockDuration);
+        vault.transferOwnership(msg.sender);
         userVaults[msg.sender].push(IDepositBox(address(vault)));
         emit VaultCreated(msg.sender, address(vault), "TimeLocked");
         return address(vault);
