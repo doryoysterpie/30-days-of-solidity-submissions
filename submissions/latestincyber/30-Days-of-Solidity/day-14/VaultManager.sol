@@ -8,7 +8,7 @@ contract VaultManager {
     mapping(address => IDepositBox[]) public userVaults;
     event VaultCreated(address indexed user, address vault, string vaultType);
 
-    function createBasicVault() external returns (addess) {
+    function createBasicVault() external returns (address) {
         BasicDepositBox vault = new BasicDepositBox();
         vault.transferOwnership(msg.sender);
         userVaults[msg.sender].push(IDepositBox(address(vault)));
