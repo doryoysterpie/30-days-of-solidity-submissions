@@ -10,7 +10,8 @@ import "./SubscriptionStorageLayout.sol";
 contract SubscriptionStorage is day-17/SubscriptionStorageLayout {
     constructor(address _logicContract) {
         owner = msg.sender;
-        logicContract = _logicContract;
+        require(_logicContract != address(0), "Invalid logic address.");
+        require(_logicContract.code.length > 0, "Logic must be a contract.");
     }
 
     function upgradeTo(address _newLogic) external {
