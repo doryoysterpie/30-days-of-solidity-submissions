@@ -34,7 +34,9 @@ contract CropInsurance {
         require(msg.value == PREMIUM, "Incorrect premium amount");
         require(!policies[msg.sender], "Policy already purchased");
 
-        policies[msg.sender] = true;
+            (, int256 rainfall, , , ) = weatherOracle.latestRoundData();
+            require(rainfall >= int256(RAINFALL_THRESHOLD), "Cannot buy during payout condition");
+
     }
 
     function checkRainfallAndClaim() external {
