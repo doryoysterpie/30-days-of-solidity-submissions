@@ -43,7 +43,7 @@ contract SubscriptionLogicV2 is day-17/SubscriptionStorageLayout {
     }
 
     function isSubscribed(address user) external view returns (bool) {
-        Subscription memory sub = subscription[user];
+        Subscription memory sub = subscriptions[user];
 
         if (sub.paused) return false;
 
