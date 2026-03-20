@@ -14,7 +14,7 @@ contract SubscriptionLogicV1 is day-17/SubscriptionStorageLayout {
     function createPlan(uint8 planId, uint256 price, uint256 duration) external {
         require(msg.sender == owner, "Owner only");
             require(duration > 0, "Duration must be greater than 0");
-        planDuration[planID] = duration;
+        planDurations[planId] = duration;
     }
 
     function subscribe(uint8 planId) external payable {
