@@ -7,14 +7,17 @@ contract MockWeatherOracle {
     uint80 private _roundId;
     int256 private _rainfallData; // in millimeters
     uint256 private _timestamp;
+    address private immutable _owner;
 
     constructor() {
+        _owner = msg.sender;
         _roundId = 1;
         _timestamp = block.timestamp;
         _rainfallData = 100; // default rainfall
     }
 
     function updateRainfall(int256 _rainfall) external {
+        require(msg.sender == _owner, "Only owner can update rainfall");
         _rainfallData = _rainfall;
         _timestamp = block.timestamp;
         _roundId++;
