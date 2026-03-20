@@ -25,12 +25,14 @@ contract SubscriptionStorage is day-17/SubscriptionStorageLayout {
         require(impl != address(0), "Logic contract not set.");
 
         assembly {
-            calldatacopy(ptr, 0, calldatasize())
-            let result := delegatecall(gas(), impl, ptr, calldatasize(), 0, 0)
-            returndatacopy(0, 0, returndatasize())
-            switch result
-            case 0 { revert(0, returndatasize()) }
-            default { return(0, returndatasize()) }
+                    let ptr := mload(0x40)
+                    calldatacopy(ptr, 0, calldatasize())
+                    let result := delegatecall(gas(), impl, ptr, calldatasize(), 0, 0)
+                    let size := returndatasize()
+                    returndatacopy(ptr, 0, size)
+                    switch result
+                    case 0 { revert(ptr, size) }
+                    default { return(ptr, size) }
         }
     }
 
