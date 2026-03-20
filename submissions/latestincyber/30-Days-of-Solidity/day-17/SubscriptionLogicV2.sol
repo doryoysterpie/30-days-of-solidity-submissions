@@ -6,7 +6,7 @@ import "./SubscriptionStorageLayout.sol";
 // Upgraded logic with pause/resume functions
 
 contract SubscriptionLogicV2 is day-17/SubscriptionStorageLayout {
-    function createPlan(uint8 planId, uint56 price, uint256 duration) external {
+    function createPlan(uint8 planId, uint256 price, uint256 duration) external {
         require(msg.sender == owner, "Owner only");
         planPrices[planId] = price;
         planDuration[planId] = duration;
