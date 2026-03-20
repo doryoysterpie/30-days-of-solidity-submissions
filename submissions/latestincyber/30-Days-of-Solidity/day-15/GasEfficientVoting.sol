@@ -18,7 +18,7 @@ contract GasEfficientVoting {
     mapping(address => uint256) private voterRegistery; // Maps voter address to a bitmap of votes (up to 256 proposals)
 
     function createProposal(bytes32 _name) external {
-        proposalCount++;
+        require(proposalCount < type(uint8).max, "Max proposals reached");
         uint32 currentTime = uint32(block.timestamp);
 
         proposals[proposalCount] = Proposal({
