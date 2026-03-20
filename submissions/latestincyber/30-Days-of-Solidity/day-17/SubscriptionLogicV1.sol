@@ -23,7 +23,7 @@ contract SubscriptionLogicV1 is day-17/SubscriptionStorageLayout {
 
         subscriptions[msg.sender] = Subscription({
             planId: planId,
-            expiry: block.timestamp + planDuration[planId],
+            expiry: block.timestamp + planDurations[planId],
             paused: false
         });
     }
