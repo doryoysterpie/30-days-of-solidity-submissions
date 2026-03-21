@@ -18,7 +18,7 @@ contract SubscriptionStorage is day-17/SubscriptionStorageLayout {
         require(msg.sender == owner, "You are not the owner.");
         require(_newLogic != address(0), "Invalid logic address.");
         require(_newLogic.code.length > 0, "Logic must be a contract.");
-    }
+        logicContract = _newLogic;
 
     fallback() external payable {
         address impl = logicContract;
