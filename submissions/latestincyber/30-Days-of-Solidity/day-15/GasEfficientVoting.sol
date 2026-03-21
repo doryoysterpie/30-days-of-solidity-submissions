@@ -19,7 +19,7 @@ contract GasEfficientVoting {
 
     function createProposal(bytes32 _name) external {
         require(proposalCount < type(uint8).max, "Max proposals reached");
-        uint32 currentTime = uint32(block.timestamp);
+        proposalCount++;
 
         proposals[proposalCount] = Proposal({
             name: _name,
