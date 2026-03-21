@@ -36,7 +36,7 @@ contract CropInsurance {
 
             (, int256 rainfall, , , ) = weatherOracle.latestRoundData();
             require(rainfall >= int256(RAINFALL_THRESHOLD), "Cannot buy during payout condition");
-
+            policies[msg.sender] = true;
     }
 
     function checkRainfallAndClaim() external {
