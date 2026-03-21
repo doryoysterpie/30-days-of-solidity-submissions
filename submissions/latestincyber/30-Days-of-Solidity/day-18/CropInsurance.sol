@@ -26,7 +26,7 @@ contract CropInsurance {
     
     constructor(address _oracleAddress) {
         require(_oracleAddress != address(0), "Invalid oracle address");
-    }
+        weatherOracle = IWeatherOracle(_oracleAddress);
 
     receive() external payable {} // fund the insurance pool
 
