@@ -12,7 +12,7 @@ contract SubscriptionStorage is day-17/SubscriptionStorageLayout {
         owner = msg.sender;
         require(_logicContract != address(0), "Invalid logic address.");
         require(_logicContract.code.length > 0, "Logic must be a contract.");
-    }
+        logicContract = _logicContract;
 
     function upgradeTo(address _newLogic) external {
         require(msg.sender == owner, "You are not the owner.");
