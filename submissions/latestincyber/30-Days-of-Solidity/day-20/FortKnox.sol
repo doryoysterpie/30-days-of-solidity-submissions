@@ -23,12 +23,13 @@ contract FortKnox is ReentrancyGuard, Ownable, Pausable {
 
     function withdraw() external nonReentrant whenNotPaused {
         // 1. CHECKS — validate everything first
-        uint256 amount = balances[msg.sender]; // how much do they have?
-        require(amount > 0, "Nothing to withdraw");
-        require(amount <= MAX_WITHDRAWAL, "Exceeds limit");
+        uint256 userBalance = balances[msg.sender]; // how much do they have?
+        require(userBalance > 0, "Nothing to withdraw");
+
+        uint256 amount = userBalance > MAX_WITHDRAWAL ? MAX_WITHDRAWAL : userBalance;
 
         // 2. EFFECTS — update state before any external call
-        balances[msg.sender] = 0;  // ← zero it FIRST
+        balances[msg.sender] = userBalance - amount;
 
         // 3. INTERACTIONS — now talk to the outside world
         (bool sent, ) = payable(msg.sender).call{value: amount}("");
