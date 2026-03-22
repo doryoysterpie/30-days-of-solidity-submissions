@@ -119,7 +119,17 @@ contract SimpleNFT is IERC721 {
         _balances[from] -= 1;
         _balances[to] += 1;
         _owners[tokenId] = to;
-        delete _tokenApprovals[tokenId];
+
+        uint256[] storage fromTokens = _ownedTokens[from];
+        for (uint256 i = 0; i < fromTokens.length; i++) {
+            if (fromTokens[i] == tokenId) {
+                fromTokens[i] = fromTokens[fromTokens.length - 1];
+                fromTokens.pop();
+                break;
+            }
+        }
+        _ownedTokens[to].push(tokenId);
+
         emit Transfer(from, to, tokenId);
     }
 
