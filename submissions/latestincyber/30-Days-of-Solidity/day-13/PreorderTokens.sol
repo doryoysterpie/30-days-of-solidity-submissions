@@ -35,7 +35,7 @@ contract SimplifiedTokenSale is SimpleERC20 {
         require(msg.value <= type(uint256).max / 10**decimals, "Amount too large");
 
         uint256 tokenAmount = (msg.value * 10**decimals) / tokenPrice;
-        _transfer(address(this), msg.sender, tokenAmount);
+        contributions[msg.sender] += msg.value;
         emit TokensPurchased(msg.sender, msg.value, tokenAmount);
 
     }
