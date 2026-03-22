@@ -105,7 +105,7 @@ contract SimpleNFT is IERC721 {
         require(to != address(0), "Zero address");
         _balances[to] += 1;
         _tokenURIs[tokenId] = uri;
-        emit Transfer(address(0), to, tokenId);
+        _ownedTokens[to].push(tokenId);
     }
 
     function tokenURI(uint256 tokenId) public view returns (string memory) {
