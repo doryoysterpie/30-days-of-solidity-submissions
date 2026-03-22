@@ -18,7 +18,7 @@ contract SimplifiedTokenSale is SimpleERC20 {
         uint256 _saleDurationInSeconds,
         address _projectOwner
     ) SimpleERC20(_initialSupply) {
-        tokenPrice = _tokenPrice;
+        require(_tokenPrice > 0, "Token price must be > 0");
         saleStartTime = block.timestamp;
         saleEndTime = block.timestamp + _saleDurationInSeconds;
         projectOwner = _projectOwner;
