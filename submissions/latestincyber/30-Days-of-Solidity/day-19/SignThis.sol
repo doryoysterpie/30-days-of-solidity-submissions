@@ -25,7 +25,7 @@ contract SignThis {
         // 1. Recreate the hash that was signed
         // We hash the msg.sender because the permission slip is bound to THEIR address.
         // They can't give it to someone else.
-        bytes32 messageHash = keccak256(abi.encodePacked(msg.sender));
+        bytes32 messageHash = keccak256(abi.encode(address(this), block.chainid, msg.sender));
         
         // 2. Add the "Ethereum Signed Message" prefix (standard security practice)
         bytes32 ethSignedMessageHash = messageHash.toEthSignedMessageHash();
