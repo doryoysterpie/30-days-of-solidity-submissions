@@ -20,6 +20,10 @@ contract FairChainLottery is VRFConsumerBaseV2Plus {
         lotteryState = LOTTERY_STATE.CLOSED;
     }
 
+        function startLottery() external onlyOwner {
+            require(lotteryState == LOTTERY_STATE.CLOSED, "Lottery not closed");
+            lotteryState = LOTTERY_STATE.OPEN;
+        }
     function enter() public payable {
         require(lotteryState == LOTTERY_STATE.OPEN, "Lottery not open");
         require(msg.value >= entryFee, "Not enough ETH");
