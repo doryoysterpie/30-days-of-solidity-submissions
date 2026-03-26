@@ -153,14 +153,14 @@ contract SimpleNFT is IERC721 {
         }
         return true;
     }
-
-    // royalties (EIP-2981)
-    function royaltyInfo(uint256 tokenId, uint256 salePrice)
-        external view returns (address receiver, uint256 royaltyAmount)
-    {
-        return (creator, salePrice * 5 / 100); // 5% royalty
-    }
 }
+
+// royalties (EIP-2981)
+// function royaltyInfo(uint256 tokenId, uint256 salePrice)
+//    external view returns (address receiver, uint256 royaltyAmount)
+// {
+//    return (creator, salePrice * 5 / 100); // 5% royalty
+// }
 
 // the next three lines are how to set up non-transferable NFTs (soulbound tokens):
 // function _transfer(address from, address to, uint256 tokenId) internal override {
