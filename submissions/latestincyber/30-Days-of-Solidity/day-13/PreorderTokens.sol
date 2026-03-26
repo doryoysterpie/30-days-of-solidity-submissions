@@ -73,7 +73,7 @@ contract SimplifiedTokenSale is SimpleERC20 {
 
     function buyTokens() public payable {
         require(!finalized && block.timestamp <= saleEndTime, "Sale inactive");
-        uint256 tokenAmount = (msg.value * 10**decimals) / currentPrice;
+        uint256 currentPrice = getTokenPrice();
         _transfer(address(this), msg.sender, tokenAmount);
     }
     
