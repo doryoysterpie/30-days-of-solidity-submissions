@@ -101,9 +101,11 @@ contract SimpleNFT is IERC721 {
     // how an NFT is born
     function mint(address to, string memory uri) public {
         require(msg.sender == creator, "Only creator can mint");
+        uint256 tokenId = _tokenIdCounter;
         _tokenIdCounter++;
         require(to != address(0), "Zero address");
         _balances[to] += 1;
+        _owners[tokenId] = to;
         _tokenURIs[tokenId] = uri;
         _ownedTokens[to].push(tokenId);
     }
