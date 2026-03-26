@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract SimpleLending {
+
+//adding this to protect against a new vulnerability found from EIP-7702
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+
+contract SimpleLending is ReentrancyGuard {
     mapping(address => uint256) public depositBalances;
     mapping(address => uint256) public borrowBalances;
     mapping(address => uint256) public collateralBalances;
@@ -26,6 +30,11 @@ contract SimpleLending {
     function getDebtValue(address user) public view returns (uint256) {
         return calculateInterestAccrued(user);
     }
+
+    // add the modifiers to borrow, liquidate and flashLoan (part of defence from EIP7702 vuln)
+    function borrow(uint256 amount) external nonReentrant { ...}
+    function liquidate(address borrower) external payable nonReentrant { ... }
+    function flashLoan(uint256 amount) external nonReentrant { ... }
 
     // interest = principal * rate * time
     // we use basis points because solidity doesn't have decimals (so we use intergers)
