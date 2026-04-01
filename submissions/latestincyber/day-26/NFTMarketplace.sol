@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract NFTMarketplace is ReentrancyGuard {
     address public owner;
@@ -18,7 +18,7 @@ contract NFTMarketplace is ReentrancyGuard {
     }
 
     // NFT Address -> Token ID -> Listing
-    mapping(maddress => mapping(uint256 => Listing)) public listings;
+    mapping(address => mapping(uint256 => Listing)) public listings;
 
     // revenue collected by the marketplace
     uint256 public feesCollected;
@@ -43,7 +43,7 @@ contract NFTMarketplace is ReentrancyGuard {
         address nftAddress,
         uint256 tokenId, 
         uint256 price
-    ) external nonReentrant {
+    ) public nonReentrant {
         require(price > 0, "Price must be greater than 0");
 
         // 1. check if the marketplace is approved to move the NFT
@@ -64,8 +64,8 @@ contract NFTMarketplace is ReentrancyGuard {
      * @param nftAddress: address of the NFT
      * @param tokenId: the token ID of the NFT
      */
-    function buyItem(address nftAddress, uint256 tokenID) external payable nonReentrant {
-        Listing memory listedItem = listings[nftAddress][tokenID];
+    function buyItem(address nftAddress, uint256 tokenId) external payable nonReentrant {
+        Listing memory listedItem = listings[nftAddress][tokenId];
         require(listedItem.isListed, "Item not listed");
         require(msg.value == listedItem.price, "Price not met"); // this protects against price manipulation
 
@@ -86,11 +86,11 @@ contract NFTMarketplace is ReentrancyGuard {
         // 4. transfer NFT
         IERC721(nftAddress).safeTransferFrom(listedItem.seller, msg.sender, tokenId);
 
-        emit ItemBought(msg.sender, nftAddress, tokenId, listedIten.price);
+        emit ItemBought(msg.sender, nftAddress, tokenId, listedItem.price);
     }
 
     function cancelListing(address nftAddress, uint256 tokenId) external nonReentrant {
-        Listing memory listedItem = listings[nftAddress][tokenID];
+        Listing memory listedItem = listings[nftAddress][tokenId];
         require(listedItem.seller == msg.sender, "tsk tsk you are not the seller");
         require(listedItem.isListed, "Not listed");
 
@@ -143,8 +143,8 @@ contract NFTMarketplace is ReentrancyGuard {
         uint256 price;
     }
 
-    function listBundle(address[] memory nfts, uint256[] memory ids, uint256 price) external {
-        for (uint i = 0; i < nft.length; i++) {
+    function listBundle(address[] memory nfts, uint256[] memory ids, uint256[] memory prices) external {
+        for (uint i = 0; i < nfts.length; i++) {
             listItem(nfts[i], ids[i], prices[i]);
         }
     }
